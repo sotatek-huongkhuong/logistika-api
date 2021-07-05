@@ -12,11 +12,9 @@ import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.RequestSpecification;
 import org.hamcrest.Matchers;
 
-import java.io.File;
-import java.util.Iterator;
 import java.util.Map;
 
-public class baseAPI {
+public class BaseAPI {
     private static ThreadLocal<Response> response = new ThreadLocal();
     private static ThreadLocal<FilterableRequestSpecification> reqSpec = new ThreadLocal();
 
@@ -89,7 +87,7 @@ public class baseAPI {
         return res;
     }
 
-    public baseAPI validateResponse(int statusCode) {
+    public BaseAPI validateResponse(int statusCode) {
         ((ValidatableResponse) ((ValidatableResponse) ((ValidatableResponse) ((ValidatableResponse) ((ValidatableResponse) ((Response) response.get()).then()).log().ifValidationFails()).statusCode(statusCode)).and()).body("", Matchers.allOf(Matchers.notNullValue(), Matchers.not("")), new Object[0])).extract().response();
         return this;
     }
@@ -122,12 +120,12 @@ public class baseAPI {
     }
 
 
-    public baseAPI validateStatusCode(int statusCode) {
+    public BaseAPI validateStatusCode(int statusCode) {
         ((ValidatableResponse) ((ValidatableResponse) ((Response) response.get()).then()).log().ifValidationFails()).statusCode(statusCode);
         return this;
     }
 
-    public baseAPI validateStatusCode(int statusCode, Response respons) {
+    public BaseAPI validateStatusCode(int statusCode, Response respons) {
         ((ValidatableResponse) ((ValidatableResponse) (respons).then()).log().ifValidationFails()).statusCode(statusCode);
         return this;
     }
